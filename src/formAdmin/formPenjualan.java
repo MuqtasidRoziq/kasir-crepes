@@ -1,10 +1,14 @@
 package formAdmin;
+
 import java.awt.*;
 import org.jfree.chart.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import konektor.koneksi;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class formPenjualan extends javax.swing.JPanel {
@@ -45,29 +49,62 @@ public class formPenjualan extends javax.swing.JPanel {
 
     private void GrafikPenjualan() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
         try {
             String query = "SELECT MONTH(tanggal) AS bulan, SUM(subtotal) AS total_penjualan FROM transaksi GROUP BY MONTH(tanggal)";
+            System.out.println("Executing query: " + query);
+
             try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int bulan = rs.getInt("bulan");
                     double total = rs.getDouble("total_penjualan");
                     String namaBulan = getNamaBulan(bulan);
-                    dataset.addValue(total, "Penjualan", "Bulan " + namaBulan);
+                    dataset.addValue(total, "",namaBulan); // Simpler label
+                    System.out.println("Data added: " + namaBulan + " = " + total);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JFreeChart chart = ChartFactory.createBarChart("", "Bulan", "", dataset);
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(400, 300));
+        // Jika dataset kosong, tambahkan data dummy
+        if (dataset.getRowCount() == 0) {
+            dataset.addValue(100, "Penjualan", "Jan");
+            dataset.addValue(150, "Penjualan", "Feb");
+            System.out.println("Menggunakan data dummy untuk testing");
+        }
 
+        JFreeChart chart = ChartFactory.createLineChart(
+                "",
+                "Bulan",
+                "Total",
+                dataset
+        );
+
+        // Kustomisasi garis
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.BLACK);
+
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, new Color(79, 129, 189));
+        renderer.setSeriesStroke(0, new BasicStroke(2.5f));
+        renderer.setBaseShapesVisible(true);
+        plot.setRenderer(renderer);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(450, 450));
+        chartPanel.setDomainZoomable(true);
+        chartPanel.setRangeZoomable(true);
+
+        // Debug panel
         pnGrafikPenjualan.removeAll();
         pnGrafikPenjualan.setLayout(new BorderLayout());
         pnGrafikPenjualan.add(chartPanel, BorderLayout.CENTER);
         pnGrafikPenjualan.revalidate();
         pnGrafikPenjualan.repaint();
+
+        
     }
 
     private void GrafikPenjualanHariIni() {
@@ -90,25 +127,38 @@ public class formPenjualan extends javax.swing.JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JFreeChart chart = ChartFactory.createBarChart(
-                "", // Judul chart
-                "Nama Produk", // Label X
-                "Total Penjualan", // Label Y
+        JFreeChart chart = ChartFactory.createLineChart(
+                "",
+                "Nama Produk",
+                "Total Penjualan",
                 dataset
         );
 
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(400, 300));
+        
+        // Kustomisasi garis
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.BLACK);
 
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, new Color(79, 129, 189));
+        renderer.setSeriesStroke(0, new BasicStroke(2.5f));
+        renderer.setBaseShapesVisible(true);
+        plot.setRenderer(renderer);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(450, 450));
+        chartPanel.setDomainZoomable(true);
+        chartPanel.setRangeZoomable(true);
+        
         pnProdukLaris.removeAll();
         pnProdukLaris.setLayout(new BorderLayout());
         pnProdukLaris.add(chartPanel, BorderLayout.CENTER);
         pnProdukLaris.revalidate();
         pnProdukLaris.repaint();
     }
-
     // Fungsi untuk mengubah bulan angka menjadi nama
+
     private String getNamaBulan(int bulan) {
         String[] namaBulan = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
         return namaBulan[bulan - 1];
