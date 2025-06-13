@@ -163,7 +163,7 @@ public class formUtama extends javax.swing.JFrame {
 
         listMenu.setPreferredSize(new java.awt.Dimension(255, 449));
 
-        listMenuItem.setBackground(new java.awt.Color(153, 153, 255));
+        listMenuItem.setBackground(new java.awt.Color(255, 204, 0));
         listMenuItem.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         listMenuItem.setLayout(new javax.swing.BoxLayout(listMenuItem, javax.swing.BoxLayout.Y_AXIS));
 

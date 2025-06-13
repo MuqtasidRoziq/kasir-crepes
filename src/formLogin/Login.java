@@ -47,7 +47,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        background.setBackground(new java.awt.Color(153, 153, 255));
+        background.setBackground(new java.awt.Color(255, 204, 0));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbLogin.setFont(new java.awt.Font("Palatino Linotype", 1, 24)); // NOI18N
@@ -80,7 +80,7 @@ public class Login extends javax.swing.JFrame {
         });
         background.add(inputUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 290, 40));
 
-        btnExit.setBackground(new java.awt.Color(51, 51, 255));
+        btnExit.setBackground(new java.awt.Color(255, 153, 0));
         btnExit.setFont(new java.awt.Font("Perpetua", 1, 12)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("EXIT");
@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         });
         background.add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 290, 40));
 
-        btnLogin.setBackground(new java.awt.Color(51, 51, 255));
+        btnLogin.setBackground(new java.awt.Color(255, 153, 0));
         btnLogin.setFont(new java.awt.Font("Perpetua", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("LOGIN");

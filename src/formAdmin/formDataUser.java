@@ -380,7 +380,7 @@ public class formDataUser extends javax.swing.JPanel {
         bgDataUSer.setBackground(new java.awt.Color(255, 255, 255));
         bgDataUSer.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnTambah.setBackground(new java.awt.Color(51, 51, 255));
+        btnTambah.setBackground(new java.awt.Color(255, 153, 0));
         btnTambah.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("Tambah");
@@ -390,7 +390,7 @@ public class formDataUser extends javax.swing.JPanel {
             }
         });
 
-        btnEdit.setBackground(new java.awt.Color(51, 51, 255));
+        btnEdit.setBackground(new java.awt.Color(255, 153, 0));
         btnEdit.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit");
@@ -400,7 +400,7 @@ public class formDataUser extends javax.swing.JPanel {
             }
         });
 
-        btnHapus.setBackground(new java.awt.Color(51, 51, 255));
+        btnHapus.setBackground(new java.awt.Color(255, 153, 0));
         btnHapus.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
@@ -416,7 +416,7 @@ public class formDataUser extends javax.swing.JPanel {
             }
         });
 
-        btnSearch.setBackground(new java.awt.Color(51, 51, 255));
+        btnSearch.setBackground(new java.awt.Color(255, 153, 0));
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cari.png"))); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

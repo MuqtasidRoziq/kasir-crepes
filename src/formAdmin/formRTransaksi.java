@@ -607,7 +607,7 @@ public class formRTransaksi extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setBackground(new java.awt.Color(255, 153, 0));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cari.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -634,7 +634,7 @@ public class formRTransaksi extends javax.swing.JPanel {
             }
         });
 
-        btnDetailTransaksi.setBackground(new java.awt.Color(0, 0, 255));
+        btnDetailTransaksi.setBackground(new java.awt.Color(255, 153, 0));
         btnDetailTransaksi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDetailTransaksi.setForeground(new java.awt.Color(255, 255, 255));
         btnDetailTransaksi.setText("Detail");
@@ -644,7 +644,7 @@ public class formRTransaksi extends javax.swing.JPanel {
             }
         });
 
-        btnCancelDetails.setBackground(new java.awt.Color(0, 0, 255));
+        btnCancelDetails.setBackground(new java.awt.Color(255, 153, 0));
         btnCancelDetails.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelDetails.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelDetails.setText("Batal");

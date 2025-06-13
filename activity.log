@@ -28,3 +28,31 @@ Jun 13, 2025 1:49:26 PM loging.loging$ActivityLogger logLogin
 INFO: admin berhasil melakukan login.
 Jun 13, 2025 1:50:19 PM loging.loging$ActivityLogger logLogin
 INFO: admin berhasil melakukan login.
+Jun 13, 2025 1:50:26 PM loging.loging$ActivityLogger logLogin
+INFO: fajri berhasil melakukan login.
+Jun 13, 2025 1:51:34 PM loging.loging$ActivityLogger logLogin
+INFO: admin berhasil melakukan login.
+Jun 13, 2025 3:07:49 PM loging.loging$ActivityLogger logLogin
+INFO: fajri berhasil melakukan login.
+Jun 13, 2025 3:36:03 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.
+Jun 13, 2025 4:39:24 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.
+Jun 13, 2025 5:17:04 PM loging.loging$ActivityLogger logLogin
+INFO: fajri berhasil melakukan login.
+Jun 13, 2025 5:21:09 PM loging.loging$ActivityLogger logError
+SEVERE: Error: Gagal login karena username/password salah.
+Jun 13, 2025 5:21:11 PM loging.loging$ActivityLogger logLogin
+INFO: admin berhasil melakukan login.
+Jun 13, 2025 5:22:05 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.
+Jun 13, 2025 5:27:09 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.
+Jun 13, 2025 5:51:47 PM loging.loging$ActivityLogger logLogin
+INFO: fajri berhasil melakukan login.
+Jun 13, 2025 6:02:15 PM loging.loging$ActivityLogger logLogin
+INFO: admin berhasil melakukan login.
+Jun 13, 2025 6:04:18 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.
+Jun 13, 2025 6:07:50 PM loging.loging$ActivityLogger logLogin
+INFO: iqbal berhasil melakukan login.

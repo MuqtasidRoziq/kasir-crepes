@@ -39,7 +39,7 @@ public class formMenuList extends javax.swing.JPanel {
         lb_icon = new javax.swing.JLabel();
         lb_iconSub = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(153, 153, 255));
+        setBackground(new java.awt.Color(255, 204, 0));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);

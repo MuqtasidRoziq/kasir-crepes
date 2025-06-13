@@ -2,27 +2,40 @@ package formKasir;
 
 import konektor.koneksi;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import com.itextpdf.text.*;
+import javax.swing.*;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.File;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class formHalamanKasir extends javax.swing.JPanel {
 
@@ -120,45 +133,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
     }
 //  Set Nama Kasir END //
 
-// gaperlu search sii keknya
-//  Function Search Product Tab //
-//    private void searchProduct(){
-//        
-//        String keyword = inputIdProduk.getText().trim();
-//        
-//        if (keyword.isEmpty()) {
-//            txtnamaproduk.setText("");
-//            txthargavarian.setText("");
-//            JOptionPane.showMessageDialog(this, "Kolom pencarian harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        
-//        try{
-//            String sql = "SELECT * FROM produk WHERE id_produk ='" + inputIdProduk.getText() + "'";
-//            Connection conn = koneksi.getConnection();
-//            Statement st = conn.createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//            
-//            
-//            if(rs.next()){
-//                inputIdProduk.setText(rs.getString("id_produk"));
-//                txtnamaproduk.setText(rs.getString("nama_produk"));
-//                txthargavarian.setText(rs.getString("harga_jual"));
-//                inputJumlah.requestFocus();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Produk dengan ID tersebut tidak ditemukan.", "Informasi", JOptionPane.INFORMATION_MESSAGE);
-//                txtnamaproduk.setText("");
-//                txthargavarian.setText("");
-//                inputIdProduk.requestFocus();
-//            }
-//            
-//        }catch(Exception e){
-//            
-//        }
-//    }
-//  Function Search Product Tab End// 
-    
-    
 //  Function noTransaksi Otomatis //    
     private String noTransaksi() {
         String urutan = null;
@@ -338,8 +312,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
         NotaPrint();
         resetHalaman();
     }
-    
-    
+
 //  reset
     private void resetHalaman() {
         txtnamaproduk.setText("");
@@ -421,78 +394,207 @@ public class formHalamanKasir extends javax.swing.JPanel {
     }
 //  Delete Row in TabProduk End //  
 
-    
-// Nota //
     private void NotaPrint() {
-        String folderPath = "C:\\Users\\Lenovo\\Documents\\new\\javaKasir\\Nota";
-        File folder = new File(folderPath);
+        showNotaPreview(); // Langsung panggil preview
+    }
 
-        if (!folder.exists()) {
-            folder.mkdirs();
+// Method untuk menampilkan preview nota dalam pop-up
+    private void showNotaPreview() {
+        // Buat dialog untuk preview (gunakan JDialog bukan JFrame)
+        JDialog previewDialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Preview Nota", true);
+        previewDialog.setSize(500, 700);
+        previewDialog.setLocationRelativeTo(this);
+        previewDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        // Area text untuk menampilkan nota
+        JTextArea notaTextArea = new JTextArea();
+        notaTextArea.setEditable(false);
+        notaTextArea.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        notaTextArea.setText(generateNotaText());
+
+        // Scroll pane untuk text area
+        JScrollPane scrollPane = new JScrollPane(notaTextArea);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Preview Nota"));
+
+        // Panel untuk tombol
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        // Tombol Print
+        JButton printButton = new JButton("Print");
+        printButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                printNota(notaTextArea);
+                // Hapus dispose() agar dialog tetap terbuka setelah print
+            }
+        });
+
+        // Tombol Save as Text
+        JButton saveButton = new JButton("Save as Text");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveNotaToText(notaTextArea.getText());
+                // Hapus dispose() agar dialog tetap terbuka setelah save
+            }
+        });
+
+        // Tombol Cancel
+        JButton cancelButton = new JButton("Close");
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                previewDialog.dispose();
+            }
+        });
+
+        // Tambahkan tombol ke panel
+        buttonPanel.add(printButton);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+
+        // Layout dialog
+        previewDialog.setLayout(new BorderLayout());
+        previewDialog.add(scrollPane, BorderLayout.CENTER);
+        previewDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Tampilkan dialog
+        previewDialog.setVisible(true);
+    }
+
+// [Method generateNotaText(), printNota(), dan saveNotaToText() tetap sama seperti sebelumnya]
+// Method untuk generate text nota
+    private String generateNotaText() {
+        StringBuilder nota = new StringBuilder();
+
+        // Header
+        nota.append("               Toko Kami               \n");
+        nota.append("           Jl.Mulyono no.01 Indonesia     \n");
+        nota.append("                 No Telp               \n");
+        nota.append("                                \n");
+        nota.append("==============================================\n");
+        nota.append(String.format("%-12s: %s\n", "Tanggal", lbltanggaltransaksi.getText()));
+        nota.append(String.format("%-12s: %s\n", "ID Transaksi", lbltransaksi.getText()));
+        nota.append(String.format("%-12s: %s\n", "Nama Kasir", namaKasir.getText()));
+
+        nota.append("---------------- PEMBELIAN ----------------\n");
+        nota.append(" \n");
+
+        // Produk
+        for (int i = 0; i < tabProduk.getRowCount(); i++) {
+            String namaProduk = tabProduk.getValueAt(i, 1).toString();
+            double hargaProduk = Double.parseDouble(tabProduk.getValueAt(i, 2).toString());
+            String jumlah = tabProduk.getValueAt(i, 3).toString();
+            double totalProduk = Double.parseDouble(tabProduk.getValueAt(i, 4).toString());
+
+            String harga = formatRupiah(hargaProduk);
+            String total = formatRupiah(totalProduk);
+
+            nota.append(String.format("%-12s: %s\n", "Nama", namaProduk));
+            nota.append(String.format("%-12s: %s\n", "Harga", harga));
+            nota.append(String.format("%-12s: %s\n", "Jumlah", jumlah));
+            nota.append(String.format("%-12s: %s\n", "Total", total));
+            nota.append(" \n"); // Spasi antar produk
         }
 
-        String filePath = folderPath + "\\nota_transaksi_" + lbltransaksi.getText() + ".pdf";
-        Document document = new Document();
+        // Footer total
+        nota.append("==============================================\n");
+        nota.append(String.format("%-12s: %25s\n", "Subtotal", formatRupiah(unformatRupiah(lblsubtotal.getText()))));
+        nota.append(String.format("%-12s: %26s\n", "Tunai", formatRupiah(Double.parseDouble(lblbayar.getText()))));
+        nota.append(String.format("%-12s: %25s\n", "Kembalian", formatRupiah(Double.parseDouble(lblkembalian.getText()))));
+        nota.append("==============================================\n");
 
+        // Terima kasih
+        nota.append("            Terimakasih           \n");
+        nota.append("        Telah berbelanja di Toko Kami     \n");
+
+        return nota.toString();
+    }
+
+// Method untuk print nota langsung ke printer
+    private void printNota(JTextArea textArea) {
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-            document.open();
+            PrinterJob printerJob = PrinterJob.getPrinterJob();
 
-            Font fontTitle = FontFactory.getFont(FontFactory.COURIER_BOLD, 15);
-            Font fontBody = FontFactory.getFont(FontFactory.COURIER, 12);
+            // Set printable
+            printerJob.setPrintable(new Printable() {
+                @Override
+                public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                    if (pageIndex > 0) {
+                        return NO_SUCH_PAGE;
+                    }
 
-            // Header
-            document.add(new Paragraph("               Toko Kami               ", fontTitle));
-            document.add(new Paragraph("           Jl.Mulyono no.01 Indonesia     ", fontBody));
-            document.add(new Paragraph("                 No Telp               ", fontBody));
-            document.add(new Paragraph("                                ", fontBody));
-            document.add(new Paragraph("==============================================", fontBody));
-            document.add(new Paragraph(String.format("%-12s: %s", "Tanggal", lbltanggaltransaksi.getText()), fontBody));
-            document.add(new Paragraph(String.format("%-12s: %s", "ID Transaksi", lbltransaksi.getText()), fontBody));
-            document.add(new Paragraph(String.format("%-12s: %s", "Nama Kasir", namaKasir.getText()), fontBody));
+                    Graphics2D g2d = (Graphics2D) graphics;
+                    g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-            document.add(new Paragraph("---------------- PEMBELIAN ----------------", fontBody));
-            document.add(new Paragraph(" ", fontBody));
+                    // Set font untuk printing
+                    java.awt.Font printFont = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 10);
+                    g2d.setFont(printFont);
 
-            // Produk
-            for (int i = 0; i < tabProduk.getRowCount(); i++) {
-                String namaProduk = tabProduk.getValueAt(i, 1).toString();
-                double hargaProduk = Double.parseDouble(tabProduk.getValueAt(i, 2).toString());
-                String jumlah = tabProduk.getValueAt(i, 3).toString();
-                double totalProduk = Double.parseDouble(tabProduk.getValueAt(i, 4).toString());
+                    // Print text
+                    String[] lines = textArea.getText().split("\n");
+                    int y = 20;
+                    for (String line : lines) {
+                        g2d.drawString(line, 10, y);
+                        y += 15;
 
-                String harga = formatRupiah(hargaProduk);
-                String total = formatRupiah(totalProduk);
+                        // Check if we need to go to next page
+                        if (y > pageFormat.getImageableHeight() - 20) {
+                            return PAGE_EXISTS;
+                        }
+                    }
 
-                document.add(new Paragraph(String.format("%-12s: %s", "Nama", namaProduk), fontBody));
-                document.add(new Paragraph(String.format("%-12s: %s", "Harga", harga), fontBody));
-                document.add(new Paragraph(String.format("%-12s: %s", "Jumlah", jumlah), fontBody));
-                document.add(new Paragraph(String.format("%-12s: %s", "Total", total), fontBody));
-                document.add(new Paragraph(" ", fontBody)); // Spasi antar produk
+                    return PAGE_EXISTS;
+                }
+            });
+
+            // Show print dialog dan print
+            if (printerJob.printDialog()) {
+                printerJob.print();
+                JOptionPane.showMessageDialog(this, "Nota berhasil dicetak!");
             }
 
-            // Footer total
-            document.add(new Paragraph("==============================================", fontBody));
-            document.add(new Paragraph(String.format("%-12s: %25s", "Subtotal", formatRupiah(unformatRupiah(lblsubtotal.getText()))), fontBody));
-            document.add(new Paragraph(String.format("%-12s: %26s", "Tunai", formatRupiah(Double.parseDouble(lblbayar.getText()))), fontBody));
-            document.add(new Paragraph(String.format("%-12s: %25s", "Kembalian", formatRupiah(Double.parseDouble(lblkembalian.getText()))), fontBody));
-            document.add(new Paragraph("==============================================", fontBody));
-
-            // Terima kasih
-            document.add(new Paragraph("            Terimakasih           ", fontTitle));
-            document.add(new Paragraph("        Telah berbelanja di Toko Kami     ", fontBody));
-
-            JOptionPane.showMessageDialog(this, "Nota berhasil disimpan  ");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan nota: " + e.getMessage());
+        } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(this, "Gagal mencetak nota: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            document.close();
         }
     }
 
+// Method untuk save nota ke file text
+    private void saveNotaToText(String notaContent) {
+        // File chooser untuk memilih lokasi save
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Simpan Nota Text");
+        fileChooser.setSelectedFile(new File("nota_transaksi_" + lbltransaksi.getText() + ".txt"));
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+
+            // Pastikan file berekstensi .txt
+            if (!filePath.toLowerCase().endsWith(".txt")) {
+                filePath += ".txt";
+            }
+
+            try {
+                // Write content to file
+                FileWriter writer = new FileWriter(filePath);
+                writer.write(notaContent);
+                writer.close();
+
+                JOptionPane.showMessageDialog(this, "Nota berhasil disimpan ke: " + filePath);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Gagal menyimpan nota: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
 //  
+
     private void updateNomor() {
         DefaultTableModel model = (DefaultTableModel) tabProduk.getModel();
         // Hapus baris kosong (jika ada)
@@ -628,7 +730,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btnTambah.setBackground(new java.awt.Color(51, 51, 255));
+        btnTambah.setBackground(new java.awt.Color(255, 153, 0));
         btnTambah.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("Tambah");
@@ -638,7 +740,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btnHapus.setBackground(new java.awt.Color(51, 51, 255));
+        btnHapus.setBackground(new java.awt.Color(255, 153, 0));
         btnHapus.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
@@ -669,6 +771,9 @@ public class formHalamanKasir extends javax.swing.JPanel {
             tabProduk.getColumnModel().getColumn(0).setHeaderValue("No");
         }
 
+        varian.setBackground(new java.awt.Color(255, 153, 0));
+        varian.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        varian.setForeground(new java.awt.Color(255, 255, 255));
         varian.setText("Pilih Varian");
         varian.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         varian.addActionListener(new java.awt.event.ActionListener() {
@@ -677,6 +782,9 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
+        btlpesanan.setBackground(new java.awt.Color(255, 153, 0));
+        btlpesanan.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btlpesanan.setForeground(new java.awt.Color(255, 255, 255));
         btlpesanan.setText("Batalkan Pesanan");
         btlpesanan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btlpesanan.addActionListener(new java.awt.event.ActionListener() {
@@ -685,6 +793,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
+        jPanel4.setBackground(new java.awt.Color(255, 204, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblpendapatan.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -741,17 +850,18 @@ public class formHalamanKasir extends javax.swing.JPanel {
                                 .addComponent(txtnamaproduk, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bg1Layout.createSequentialGroup()
                                     .addComponent(lbJumlah)
-                                    .addGap(50, 50, 50))
-                                .addGroup(bg1Layout.createSequentialGroup()
-                                    .addGroup(bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(lbljumlah)
-                                        .addComponent(lblharga, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btlpesanan)))
+                                    .addGap(50, 50, 50)))
                             .addComponent(lbNamaProduk)
                             .addComponent(varian, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bg1Layout.createSequentialGroup()
+                        .addGroup(bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lbljumlah)
+                            .addComponent(lblharga, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btlpesanan, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(354, 354, 354)))
                 .addContainerGap())
         );
         bg1Layout.setVerticalGroup(
@@ -790,7 +900,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        bg2.setBackground(new java.awt.Color(153, 153, 255));
+        bg2.setBackground(new java.awt.Color(255, 204, 0));
         bg2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lbTotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -833,7 +943,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btnBayar.setBackground(new java.awt.Color(51, 51, 255));
+        btnBayar.setBackground(new java.awt.Color(255, 153, 0));
         btnBayar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnBayar.setForeground(new java.awt.Color(255, 255, 255));
         btnBayar.setText("Bayar");
@@ -1056,7 +1166,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
     private javax.swing.JLabel lbNamaProduk;
     private javax.swing.JLabel lbTanggal;
     private javax.swing.JLabel lbTotal;
-    private javax.swing.JLabel lblTambahProduk1;
     private javax.swing.JLabel lblTambahProduk2;
     private javax.swing.JTextField lblbayar;
     private javax.swing.JTextField lblharga;
@@ -1067,7 +1176,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
     private javax.swing.JTextField lbltanggaltransaksi;
     private javax.swing.JTextField lbltransaksi;
     private javax.swing.JTextField namaKasir;
-    private javax.swing.JPanel pnHeader;
     private javax.swing.JTable tabProduk;
     private javax.swing.JTextField txtnamaproduk;
     private javax.swing.JButton varian;
@@ -1077,13 +1185,14 @@ public void setNamaProduk(String namaProduk) {
 
     }
 // 
+
     private String formatRupiah(double value) {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-        formatRp.setCurrencySymbol("Rp "); 
-        formatRp.setMonetaryDecimalSeparator(','); 
-        formatRp.setGroupingSeparator('.'); 
+        formatRp.setCurrencySymbol("Rp ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
 
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         kursIndonesia.setMaximumFractionDigits(2); // Dua angka di belakang koma
@@ -1091,6 +1200,7 @@ public void setNamaProduk(String namaProduk) {
 
         return kursIndonesia.format(value);
     }
+
     private double unformatRupiah(String value) {
         try {
             value = value.replace("Rp", "").replace(".", "").replace(",", ".").trim();
@@ -1100,5 +1210,5 @@ public void setNamaProduk(String namaProduk) {
         }
     }
 //
-    
+
 }

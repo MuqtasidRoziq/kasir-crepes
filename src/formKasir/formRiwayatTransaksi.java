@@ -246,7 +246,7 @@ public class formRiwayatTransaksi extends javax.swing.JPanel {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(51, 51, 255));
+        jButton7.setBackground(new java.awt.Color(255, 153, 0));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cari.png"))); // NOI18N
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -255,7 +255,7 @@ public class formRiwayatTransaksi extends javax.swing.JPanel {
             }
         });
 
-        btndetail.setBackground(new java.awt.Color(0, 0, 255));
+        btndetail.setBackground(new java.awt.Color(255, 153, 0));
         btndetail.setFont(new java.awt.Font("Schadow BT", 0, 12)); // NOI18N
         btndetail.setForeground(new java.awt.Color(255, 255, 255));
         btndetail.setText("Detail");
@@ -265,7 +265,7 @@ public class formRiwayatTransaksi extends javax.swing.JPanel {
             }
         });
 
-        btndetail1.setBackground(new java.awt.Color(0, 0, 255));
+        btndetail1.setBackground(new java.awt.Color(255, 153, 0));
         btndetail1.setFont(new java.awt.Font("Schadow BT", 0, 12)); // NOI18N
         btndetail1.setForeground(new java.awt.Color(255, 255, 255));
         btndetail1.setText("Batal");

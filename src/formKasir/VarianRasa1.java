@@ -221,7 +221,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTambahProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                .addComponent(lblTambahProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -255,7 +255,8 @@ public class VarianRasa1 extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnvarian.setFont(new java.awt.Font("Myanmar Text", 0, 12)); // NOI18N
+        btnvarian.setBackground(new java.awt.Color(255, 204, 0));
+        btnvarian.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnvarian.setText("Pilih Varian");
         btnvarian.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnvarian.addActionListener(new java.awt.event.ActionListener() {
@@ -264,6 +265,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
             }
         });
 
+        pnlrasa.setBackground(new java.awt.Color(255, 204, 0));
         pnlrasa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnlrasa.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -286,7 +288,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlrasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnvarian, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addComponent(btnvarian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -346,7 +348,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addComponent(btnsimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
         );

@@ -70,7 +70,7 @@ public class formMenuUtama extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logoKasir.png"))); // NOI18N
-        jLabel1.setText("Toko Kami");
+        jLabel1.setText("Crepes Mahabbah");
 
         lb_u.setFont(new java.awt.Font("Schadow BT", 1, 14)); // NOI18N
         lb_u.setText("Nama User");
@@ -87,8 +87,8 @@ public class formMenuUtama extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblrole, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,7 +131,7 @@ public class formMenuUtama extends javax.swing.JFrame {
 
         menuList.setPreferredSize(new java.awt.Dimension(255, 448));
 
-        listMenuItemKasir.setBackground(new java.awt.Color(153, 153, 255));
+        listMenuItemKasir.setBackground(new java.awt.Color(255, 204, 0));
         listMenuItemKasir.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         listMenuItemKasir.setLayout(new javax.swing.BoxLayout(listMenuItemKasir, javax.swing.BoxLayout.Y_AXIS));
 
