@@ -256,7 +256,7 @@ public class formRiwayatTransaksi extends javax.swing.JPanel {
         });
 
         btndetail.setBackground(new java.awt.Color(255, 153, 0));
-        btndetail.setFont(new java.awt.Font("Schadow BT", 0, 12)); // NOI18N
+        btndetail.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btndetail.setForeground(new java.awt.Color(255, 255, 255));
         btndetail.setText("Detail");
         btndetail.addActionListener(new java.awt.event.ActionListener() {
@@ -265,8 +265,8 @@ public class formRiwayatTransaksi extends javax.swing.JPanel {
             }
         });
 
-        btndetail1.setBackground(new java.awt.Color(255, 153, 0));
-        btndetail1.setFont(new java.awt.Font("Schadow BT", 0, 12)); // NOI18N
+        btndetail1.setBackground(new java.awt.Color(255, 0, 0));
+        btndetail1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btndetail1.setForeground(new java.awt.Color(255, 255, 255));
         btndetail1.setText("Batal");
         btndetail1.addActionListener(new java.awt.event.ActionListener() {

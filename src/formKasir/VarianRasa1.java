@@ -207,7 +207,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
 
         header.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(255, 204, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -255,7 +255,7 @@ public class VarianRasa1 extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnvarian.setBackground(new java.awt.Color(255, 204, 0));
+        btnvarian.setBackground(new java.awt.Color(255, 153, 0));
         btnvarian.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnvarian.setText("Pilih Varian");
         btnvarian.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -322,9 +322,12 @@ public class VarianRasa1 extends javax.swing.JFrame {
 
         footer.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBackground(new java.awt.Color(255, 204, 0));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnkembali.setBackground(new java.awt.Color(255, 0, 0));
+        btnkembali.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnkembali.setForeground(new java.awt.Color(255, 255, 255));
         btnkembali.setText("Kembali");
         btnkembali.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnkembali.addActionListener(new java.awt.event.ActionListener() {
@@ -333,6 +336,8 @@ public class VarianRasa1 extends javax.swing.JFrame {
             }
         });
 
+        btnsimpan.setBackground(new java.awt.Color(0, 204, 0));
+        btnsimpan.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnsimpan.setText("Simpan");
         btnsimpan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnsimpan.addActionListener(new java.awt.event.ActionListener() {

@@ -199,10 +199,12 @@ public class formHalamanKasir extends javax.swing.JPanel {
                 updateNomor();
                 total += subTotal;
                 lblsubtotal.setText(nf.format(total)); // tampil sebagai Rp
-
                 lbltransaksi.setText(noTransaksi());
                 lbltanggaltransaksi.setText(date);
-
+                
+                txtnamaproduk.setText("");
+                lblharga.setText("");
+                lbljumlah.setText("");
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Input harga atau jumlah tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -234,6 +236,8 @@ public class formHalamanKasir extends javax.swing.JPanel {
             simpanDetailTransaksi();
 
             JOptionPane.showMessageDialog(this, "Proses pembayaran berhasil!\nKembalian: Rp" + kembalian, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            lbltransaksi.setText("");
+            lbltanggaltransaksi.setText("");
 
         } catch (NumberFormatException e) {
         }
@@ -253,10 +257,10 @@ public class formHalamanKasir extends javax.swing.JPanel {
             ps.setDouble(6, kembalian);
 
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Data transaksi utama berhasil disimpan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Data transaksi utama berhasil disimpan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan transaksi utama\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Gagal menyimpan transaksi utama\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -305,7 +309,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
         pendapatanhariini();
@@ -327,25 +330,25 @@ public class formHalamanKasir extends javax.swing.JPanel {
         varian.requestFocus(); // Fokuskan ke input ID Produk
     }
 
-    private double getSubtotalFromLabel() {
-        String formattedSubtotal = lblsubtotal.getText();
-        formattedSubtotal = formattedSubtotal.replace("Rp ", "").replace(",", "");
-        return Double.parseDouble(formattedSubtotal);
-    }
-
-    private double getPembayaranFromLabel() throws NumberFormatException {
-        String bayarText = lblbayar.getText()
-                .replace("Rp", "")
-                .replaceAll("[^\\d]", "") // hanya ambil angka 0-9
-                .trim();
-
-        if (bayarText.isEmpty()) {
-            throw new NumberFormatException("Input kosong atau tidak valid");
-        }
-
-        System.out.println("DEBUG - Nilai inputBayar setelah dibersihkan: " + bayarText);
-        return Double.parseDouble(bayarText);
-    }
+//    private double getSubtotalFromLabel() {
+//        String formattedSubtotal = lblsubtotal.getText();
+//        formattedSubtotal = formattedSubtotal.replace("Rp ", "").replace(",", "");
+//        return Double.parseDouble(formattedSubtotal);
+//    }
+//
+//    private double getPembayaranFromLabel() throws NumberFormatException {
+//        String bayarText = lblbayar.getText()
+//                .replace("Rp", "")
+//                .replaceAll("[^\\d]", "") // hanya ambil angka 0-9
+//                .trim();
+//
+//        if (bayarText.isEmpty()) {
+//            throw new NumberFormatException("Input kosong atau tidak valid");
+//        }
+//
+//        System.out.println("DEBUG - Nilai inputBayar setelah dibersihkan: " + bayarText);
+//        return Double.parseDouble(bayarText);
+//    }
 
     private void clearTable() {
         DefaultTableModel tbl = (DefaultTableModel) tabProduk.getModel();
@@ -421,31 +424,22 @@ public class formHalamanKasir extends javax.swing.JPanel {
 
         // Tombol Print
         JButton printButton = new JButton("Print");
-        printButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                printNota(notaTextArea);
-                // Hapus dispose() agar dialog tetap terbuka setelah print
-            }
+        printButton.addActionListener((ActionEvent e) -> {
+            printNota(notaTextArea);
+            // Hapus dispose() agar dialog tetap terbuka setelah print
         });
 
         // Tombol Save as Text
         JButton saveButton = new JButton("Save as Text");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveNotaToText(notaTextArea.getText());
-                // Hapus dispose() agar dialog tetap terbuka setelah save
-            }
+        saveButton.addActionListener((ActionEvent e) -> {
+            saveNotaToText(notaTextArea.getText());
+            // Hapus dispose() agar dialog tetap terbuka setelah save
         });
 
         // Tombol Cancel
         JButton cancelButton = new JButton("Close");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                previewDialog.dispose();
-            }
+        cancelButton.addActionListener((ActionEvent e) -> {
+            previewDialog.dispose();
         });
 
         // Tambahkan tombol ke panel
@@ -454,11 +448,15 @@ public class formHalamanKasir extends javax.swing.JPanel {
         buttonPanel.add(cancelButton);
 
         // Layout dialog
+        
         previewDialog.setLayout(new BorderLayout());
         previewDialog.add(scrollPane, BorderLayout.CENTER);
         previewDialog.add(buttonPanel, BorderLayout.SOUTH);
 
         // Tampilkan dialog
+        previewDialog.pack();
+        previewDialog.setLocationRelativeTo(this);
+        previewDialog.setModal(true);
         previewDialog.setVisible(true);
     }
 
@@ -467,11 +465,11 @@ public class formHalamanKasir extends javax.swing.JPanel {
     private String generateNotaText() {
         StringBuilder nota = new StringBuilder();
 
-        // Header
-        nota.append("               Toko Kami               \n");
-        nota.append("           Jl.Mulyono no.01 Indonesia     \n");
-        nota.append("                 No Telp               \n");
-        nota.append("                                \n");
+        // Header 47
+        nota.append("               Crepes Mahabbah                \n");
+        nota.append("       Ds Padaharja Kec Kramat Kab Tegal      \n");
+        nota.append("                   No Telp                    \n");
+        nota.append("                +6285229369824                \n");
         nota.append("==============================================\n");
         nota.append(String.format("%-12s: %s\n", "Tanggal", lbltanggaltransaksi.getText()));
         nota.append(String.format("%-12s: %s\n", "ID Transaksi", lbltransaksi.getText()));
@@ -556,7 +554,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
 
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(this, "Gagal mencetak nota: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -589,7 +586,6 @@ public class formHalamanKasir extends javax.swing.JPanel {
 
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Gagal menyimpan nota: " + e.getMessage());
-                e.printStackTrace();
             }
         }
     }
@@ -730,7 +726,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btnTambah.setBackground(new java.awt.Color(255, 153, 0));
+        btnTambah.setBackground(new java.awt.Color(51, 204, 0));
         btnTambah.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("Tambah");
@@ -740,7 +736,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btnHapus.setBackground(new java.awt.Color(255, 153, 0));
+        btnHapus.setBackground(new java.awt.Color(255, 51, 0));
         btnHapus.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
@@ -782,7 +778,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
             }
         });
 
-        btlpesanan.setBackground(new java.awt.Color(255, 153, 0));
+        btlpesanan.setBackground(new java.awt.Color(255, 0, 0));
         btlpesanan.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btlpesanan.setForeground(new java.awt.Color(255, 255, 255));
         btlpesanan.setText("Batalkan Pesanan");
@@ -1010,10 +1006,10 @@ public class formHalamanKasir extends javax.swing.JPanel {
                                 .addComponent(lbltanggaltransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(bg2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bg2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
         bg2Layout.setVerticalGroup(
             bg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1100,8 +1096,8 @@ public class formHalamanKasir extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void varianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varianActionPerformed
-        VarianRasa1 varian = new VarianRasa1(this);
-        varian.setVisible(true);
+        VarianRasa1 varianRasa = new VarianRasa1(this);
+        varianRasa.setVisible(true);
     }//GEN-LAST:event_varianActionPerformed
 
     private void btlpesananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlpesananActionPerformed
