@@ -73,7 +73,7 @@ public class formHalamanKasir extends javax.swing.JPanel {
     }
 
     private void btnPilihVarianActionPerformed(java.awt.event.ActionEvent evt) {
-        VarianRasa varian = new VarianRasa(this);
+        VarianRasa1 varian = new VarianRasa1(this);
         varian.setVisible(true);
     }
 

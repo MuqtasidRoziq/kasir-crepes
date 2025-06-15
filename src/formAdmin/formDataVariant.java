@@ -163,7 +163,6 @@ public class formDataVariant extends javax.swing.JPanel {
         btnCancelAddVarian1 = new javax.swing.JButton();
         txtHarga1 = new javax.swing.JTextField();
         lblHarga1 = new javax.swing.JLabel();
-        lbDataUser = new javax.swing.JLabel();
         bgDataUSer = new javax.swing.JPanel();
         btnTambah = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -172,6 +171,9 @@ public class formDataVariant extends javax.swing.JPanel {
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabVarian = new javax.swing.JTable();
+        btnHapus1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -341,8 +343,7 @@ public class formDataVariant extends javax.swing.JPanel {
                 .addGap(17, 17, 17))
         );
 
-        lbDataUser.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        lbDataUser.setText("Data Varian");
+        setLayout(new java.awt.BorderLayout());
 
         bgDataUSer.setBackground(new java.awt.Color(255, 255, 255));
         bgDataUSer.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -423,6 +424,16 @@ public class formDataVariant extends javax.swing.JPanel {
         tabVarian.setShowGrid(false);
         jScrollPane1.setViewportView(tabVarian);
 
+        btnHapus1.setBackground(new java.awt.Color(255, 153, 0));
+        btnHapus1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnHapus1.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapus1.setText("Batal");
+        btnHapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapus1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bgDataUSerLayout = new javax.swing.GroupLayout(bgDataUSer);
         bgDataUSer.setLayout(bgDataUSerLayout);
         bgDataUSerLayout.setHorizontalGroup(
@@ -439,7 +450,9 @@ public class formDataVariant extends javax.swing.JPanel {
                         .addComponent(btnEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnHapus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapus1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSearch)
@@ -455,34 +468,41 @@ public class formDataVariant extends javax.swing.JPanel {
                         .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnHapus1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        add(bgDataUSer, java.awt.BorderLayout.CENTER);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel3.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Data Varian");
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bgDataUSer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbDataUser)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbDataUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bgDataUSer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
+
+        add(jPanel4, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
@@ -581,6 +601,10 @@ public class formDataVariant extends javax.swing.JPanel {
         formEditVarian.dispose();
     }//GEN-LAST:event_btnCancelAddVarian1ActionPerformed
 
+    private void btnHapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapus1ActionPerformed
+        loadDataVarian();
+    }//GEN-LAST:event_btnHapus1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgDataUSer;
@@ -588,17 +612,19 @@ public class formDataVariant extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelAddVarian1;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnHapus1;
     private javax.swing.JButton btnSaveAddVarian;
     private javax.swing.JButton btnSaveAddVarian1;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnTambah;
     private javax.swing.JDialog formEditVarian;
     private javax.swing.JDialog formTambahVarian;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lbDataUser;
     private javax.swing.JLabel lblHarga;
     private javax.swing.JLabel lblHarga1;
     private javax.swing.JLabel lblIdVarian;

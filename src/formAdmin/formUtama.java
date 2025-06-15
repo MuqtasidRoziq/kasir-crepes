@@ -2,6 +2,8 @@
 package formAdmin;
 import formLogin.Login;
 import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 public class formUtama extends javax.swing.JFrame {
@@ -16,7 +18,8 @@ public class formUtama extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         execute();
         this.userName = username;
-        lblUsername.setText(username);
+        lblUsername.setText("Selamat Datang  "+username);
+        Date();
     }
 //  set nama user yang login start //    
     public void setUser(String userId, String userName, String Password, String role) {
@@ -101,6 +104,7 @@ public class formUtama extends javax.swing.JFrame {
         header1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
+        lb_tanggal1 = new javax.swing.JLabel();
         listMenu = new javax.swing.JPanel();
         listMenuItem = new javax.swing.JPanel();
         content = new javax.swing.JPanel();
@@ -120,10 +124,14 @@ public class formUtama extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/market-icons-15733-removebg-preview.png"))); // NOI18N
-        jLabel1.setText("Toko Kami");
+        jLabel1.setText("Toko Mahaba");
 
-        lblUsername.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        lblUsername.setFont(new java.awt.Font("Bodoni MT", 1, 18)); // NOI18N
         lblUsername.setText("Nama User");
+
+        lb_tanggal1.setFont(new java.awt.Font("Bell MT", 1, 15)); // NOI18N
+        lb_tanggal1.setText("Tanggal");
+        lb_tanggal1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout header1Layout = new javax.swing.GroupLayout(header1);
         header1.setLayout(header1Layout);
@@ -131,8 +139,10 @@ public class formUtama extends javax.swing.JFrame {
             header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(header1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 588, Short.MAX_VALUE)
+                .addGap(69, 69, 69)
                 .addComponent(lblUsername)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
+                .addComponent(lb_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         header1Layout.setVerticalGroup(
@@ -142,7 +152,9 @@ public class formUtama extends javax.swing.JFrame {
                 .addGroup(header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, header1Layout.createSequentialGroup()
-                        .addComponent(lblUsername)
+                        .addGroup(header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUsername)
+                            .addComponent(lb_tanggal1))
                         .addContainerGap())))
         );
 
@@ -246,9 +258,16 @@ public class formUtama extends javax.swing.JFrame {
     private javax.swing.JPanel header1;
     private javax.swing.JPanel isiContent;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lb_tanggal1;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel listMenu;
     private javax.swing.JPanel listMenuItem;
     // End of variables declaration//GEN-END:variables
 
+     private void Date() {
+        Date TanggalSekarang = new Date();
+        SimpleDateFormat TanggalWaktu = new SimpleDateFormat("dd - MM - yyyy");
+        String tanggal = TanggalWaktu.format(TanggalSekarang);
+        lb_tanggal1.setText(tanggal);
+    }
 }
